@@ -57,6 +57,23 @@
     border-radius: var(--radius-md);
 }
 
+.minimap-toggle-container {
+    z-index: 1000;
+    /* Ensure on top of everything */
+    padding: 10px;
+}
+
+.minimap-toggle-container .glass-button {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.minimap-toggle-container .glass-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
 .react-flow__minimap-mask {
     fill: var(--accent-primary);
     fill-opacity: 0.1;

@@ -1,15 +1,24 @@
 .navbar {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 70px;
+    top: var(--spacing-md);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 900px;
+    height: 64px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 var(--spacing-xl);
+    padding: 0 var(--spacing-lg);
     z-index: 1000;
-    border-bottom: 1px solid var(--glass-border);
+    border: 1px solid var(--glass-border);
+    border-radius: 100px;
+    /* Full pill shape */
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--blur-md));
+    -webkit-backdrop-filter: blur(var(--blur-md));
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.5);
+    margin-top: 0;
 }
 
 .navbar-left,
@@ -28,12 +37,12 @@
 }
 
 .logo-icon {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
     line-height: 1;
 }
 
 .logo-text {
-    font-size: 1.25rem;
+    font-size: 1.125rem;
     font-weight: 700;
     letter-spacing: -0.02em;
 }
@@ -41,24 +50,24 @@
 /* View Toggle (iOS-style segmented control) */
 .view-toggle {
     display: flex;
-    background: var(--glass-bg);
+    background: rgba(0, 0, 0, 0.2);
     border: 1px solid var(--glass-border);
-    border-radius: var(--radius-md);
-    padding: 4px;
-    gap: 4px;
+    border-radius: 100px;
+    padding: 3px;
+    gap: 2px;
 }
 
 .toggle-btn {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.5rem 1rem;
+    padding: 0.4rem 1rem;
     background: transparent;
     border: none;
-    border-radius: calc(var(--radius-md) - 4px);
+    border-radius: 100px;
     color: var(--text-secondary);
-    font-size: 0.875rem;
-    font-weight: 500;
+    font-size: 0.8125rem;
+    font-weight: 600;
     cursor: pointer;
     transition: all var(--transition-fast);
     outline: none;
@@ -66,13 +75,13 @@
 
 .toggle-btn:hover {
     color: var(--text-primary);
-    background: var(--glass-bg-hover);
 }
 
 .toggle-btn.active {
-    background: var(--accent-primary);
+    background: var(--bg-tertiary);
     color: white;
-    box-shadow: 0 0 20px var(--accent-primary-glow);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--glass-border);
 }
 
 .toggle-btn svg {
@@ -84,16 +93,15 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-}
-
-.navbar-right .glass-button svg {
-    flex-shrink: 0;
+    border-radius: 100px;
+    padding: 0.5rem 1.25rem;
 }
 
 /* Responsive */
 @media (max-width: 768px) {
     .navbar {
         padding: 0 var(--spacing-md);
+        width: 95%;
     }
 
     .toggle-btn span {

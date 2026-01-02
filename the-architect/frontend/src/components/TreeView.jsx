@@ -1,13 +1,15 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import ReactFlow, {
     Background,
     Controls,
     MiniMap,
     useNodesState,
     useEdgesState,
+    Panel,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 import dagre from 'dagre';
+import { Eye, EyeOff } from 'lucide-react';
 import useStore from '../store/useStore';
 import NodeCard from './NodeCard';
 import '../styles/TreeView.css';
@@ -48,6 +50,7 @@ const getLayoutedElements = (nodes, edges) => {
 
 const TreeView = () => {
     const { nodes: storeNodes, edges: storeEdges, selectNode } = useStore();
+    const [showMiniMap, setShowMiniMap] = useState(true);
 
     // Convert store nodes to ReactFlow format
     const reactFlowNodes = useMemo(() => {
@@ -94,15 +97,30 @@ const TreeView = () => {
             >
                 <Background color="#ffffff10" gap={20} />
                 <Controls className="react-flow-controls" />
-                <MiniMap
-                    className="react-flow-minimap"
-                    nodeColor={(node) => {
-                        const status = node.data.status;
-                        if (status === 'completed') return '#10b981';
-                        if (status === 'in-progress') return '#fbbf24';
-                        return '#6b7280';
-                    }}
-                />
+
+                {/* MiniMap Toggle Button */}
+                <Panel position="bottom-right" className="minimap-toggle-container">
+                    <button
+                        className="glass-button icon-only"
+                        onClick={() => setShowMiniMap(!showMiniMap)}
+                        title={showMiniMap ? "Hide MiniMap" : "Show MiniMap"}
+                        style={{ marginBottom: '10px' }}
+                    >
+                        {showMiniMap ? <EyeOff size={20} /> : <Eye size={20} />}
+                    </button>
+                </Panel>
+
+                {showMiniMap && (
+                    <MiniMap
+                        className="react-flow-minimap"
+                        nodeColor={(node) => {
+                            const status = node.data.status;
+                            if (status === 'completed') return '#10b981';
+                            if (status === 'in-progress') return '#fbbf24';
+                            return '#6b7280';
+                        }}
+                    />
+                )}
             </ReactFlow>
         </div>
     );

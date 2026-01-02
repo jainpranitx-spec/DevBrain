@@ -110,39 +110,60 @@ export const generateEdges = (nodes) => {
         stroke: getStatusColor(node.status),
         strokeWidth: 2,
       },
+      // Particle color for graph view
+      color: getStatusColor(node.status),
     }));
 };
 
 // Helper to get status color
 export const getStatusColor = (status) => {
+  // Use CSS variables logic but in hex for canvas
   switch (status) {
     case 'completed':
-      return '#10b981';
+      return '#30d158'; // iOS Green
     case 'in-progress':
-      return '#fbbf24';
+      return '#ff9f0a'; // iOS Orange
     case 'not-started':
     default:
-      return '#6b7280';
+      return '#8e8e93'; // iOS Gray
   }
 };
 
-// Mock AI responses for demo
+// Enhanced Mock AI Responses to simulate RAG (Retrieval Augmented Generation)
 export const mockAIResponses = {
-  default: [
-    "I can help you break this down into smaller tasks. What specific aspect would you like to explore?",
-    "This looks like an important feature! Should I suggest some sub-tasks?",
-    "Let me know if you'd like me to create child nodes for this feature.",
-  ],
-  breakdown: (nodeName) => [
-    `Great! I'll break down "${nodeName}" into manageable tasks:`,
-    `• Set up the core infrastructure`,
-    `• Implement the main functionality`,
-    `• Add error handling and edge cases`,
-    `• Write tests and documentation`,
-    `\nShould I create these as child nodes?`,
-  ].join('\n'),
-  completed: [
-    "Awesome! This task is marked as complete. Anything else you'd like to work on?",
-    "Great progress! What's next on your roadmap?",
-  ],
+  default: {
+    message: "I've analyzed the current node context. I can help you break this down further, find related technical documentation, or suggest implementation steps. What do you need?",
+    type: 'ai'
+  },
+  'breakdown': {
+    message: "Based on the architecture of this node, here is a suggested breakdown:\n\n1. **Core Logic**: Define the primary data models and algorithms.\n2. **API Layer**: Design the endpoints (REST/GraphQL) to expose this functionality.\n3. **UI Components**: Create the necessary views and interaction states.\n4. **State Management**: specific stores/reducers for this feature.\n\nShall I create these sub-nodes for you?",
+    type: 'ai'
+  },
+  'context': {
+    message: "I'm reading the context from your connected knowledge base...\n\nFound 3 relevant files:\n- 📄 `architecture_v1.pdf` (Page 12)\n- 📝 `meeting_notes_backend.md`\n- 🔗 `Linear Issue #42`\n\nThis feature seems to depend on the *User Authentication* module. Ensure that token validation is implemented before proceeding with this.",
+    type: 'ai'
+  }
+};
+
+export const getAIResponse = (input, nodeLabel) => {
+  const lowerInput = input.toLowerCase();
+
+  if (lowerInput.includes('break') || lowerInput.includes('task') || lowerInput.includes('sub')) {
+    return {
+      message: `**Breakdown for ${nodeLabel}:**\n\n1. 🏗️ **Scaffold Component**: Initialize the base structure.\n2. 🔄 **State Logic**: Define ${nodeLabel} specific hooks/stores.\n3. 🎨 **Styling**: Apply glassmorphism tokens.\n4. 🧪 **Tests**: Write unit tests for core logic.\n\nWould you like me to generate these nodes?`,
+      type: 'ai'
+    };
+  }
+
+  if (lowerInput.includes('context') || lowerInput.includes('search') || lowerInput.includes('what is')) {
+    return {
+      message: `**Context Analysis for ${nodeLabel}:**\n\nInitializing semantic search...\n\n🔍 *Found related pattern in SystemDesign.md*\n> "All UI components must implement the GlassCard interface for consistency."\n\nMake sure to import glass-card utility from the styles index.`,
+      type: 'ai'
+    };
+  }
+
+  return {
+    message: `I'm focused on **${nodeLabel}**. \n\nI can assist with:\n- 🔨 Breaking this down into tasks\n- 🔍 Finding relevant code snippets\n- 📝 Generating documentation\n\nJust let me know what you're thinking.`,
+    type: 'ai'
+  };
 };
