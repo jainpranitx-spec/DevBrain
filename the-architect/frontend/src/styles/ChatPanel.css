@@ -98,8 +98,7 @@
 .close-btn.icon-only {
     width: 32px;
     height: 32px;
-    display: grid;
-    place-items: center;
+    padding: 6px
 }
 
 .close-btn:hover {

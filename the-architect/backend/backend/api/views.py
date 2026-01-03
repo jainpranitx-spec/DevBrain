@@ -38,10 +38,35 @@ class ProjectViewSet(viewsets.ModelViewSet):
         return ProjectDetailSerializer
     
     def get_queryset(self):
-        return Project.objects.filter(owner=self.request.user)
+        if self.request.user.is_authenticated:
+            return Project.objects.filter(owner=self.request.user)
+        else:
+            # For development, show projects from default user
+            default_user, created = User.objects.get_or_create(
+                username='default_user',
+                defaults={
+                    'email': 'default@devbrain.com',
+                    'first_name': 'Default',
+                    'last_name': 'User'
+                }
+            )
+            return Project.objects.filter(owner=default_user)
     
     def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+        # Handle anonymous users for development
+        if self.request.user.is_authenticated:
+            serializer.save(owner=self.request.user)
+        else:
+            # Create or get a default user for development
+            default_user, created = User.objects.get_or_create(
+                username='default_user',
+                defaults={
+                    'email': 'default@devbrain.com',
+                    'first_name': 'Default',
+                    'last_name': 'User'
+                }
+            )
+            serializer.save(owner=default_user)
     
     @action(detail=True, methods=['get'])
     def export(self, request, pk=None):
@@ -148,9 +173,12 @@ class KnowledgeBaseViewSet(viewsets.ModelViewSet):
         # Extract content for indexing
         content = self._extract_file_content(file_obj)
         
+        # Handle anonymous users
+        uploaded_by = self.request.user if self.request.user.is_authenticated else None
+        
         serializer.save(
             project=project,
-            uploaded_by=self.request.user,
+            uploaded_by=uploaded_by,
             full_text=content,
             content_preview=content[:500]
         )

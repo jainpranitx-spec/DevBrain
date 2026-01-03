@@ -41,35 +41,21 @@ const ChatPanel = () => {
     const handleSend = async () => {
         if (!input.trim() || !selectedNodeId) return;
 
-        // Add user message
-        addChatMessage(selectedNodeId, {
-            role: 'user',
-            content: input,
-            timestamp: new Date().toISOString(),
-        });
-
         const userInput = input;
-        const nodeLabel = selectedNode.label;
-
         setInput('');
         setIsTyping(true);
 
         try {
-            // Call AI Service (Real or Mock)
-            const response = await generateAIResponse(userInput, nodeLabel);
-
-            addChatMessage(selectedNodeId, {
-                role: 'ai',
-                content: response.message,
-                timestamp: new Date().toISOString(),
-            });
+            // Use the new backend-integrated chat system
+            const result = await addChatMessage(selectedNodeId, userInput, true);
+            
+            // Show knowledge sources if available
+            if (result?.metadata?.knowledge_sources?.length > 0) {
+                console.log('📚 Knowledge sources used:', result.metadata.knowledge_sources);
+            }
         } catch (error) {
             console.error("Chat Error:", error);
-            addChatMessage(selectedNodeId, {
-                role: 'ai',
-                content: "I'm having trouble connecting to my brain right now.",
-                timestamp: new Date().toISOString(),
-            });
+            // Fallback message is handled by the store
         } finally {
             setIsTyping(false);
         }
@@ -133,10 +119,15 @@ const ChatPanel = () => {
                         )}
 
                         {messages.map((msg, idx) => (
-                            <div key={idx} className={`message ${msg.role}`}>
+                            <div key={msg.id || idx} className={`message ${msg.role}`}>
                                 <div className="message-content">
                                     <div className="message-label">{msg.role === 'user' ? 'You' : 'AI'}</div>
-                                    <div className="message-body">{msg.content}</div>
+                                    <div className="message-body">{msg.message || msg.content}</div>
+                                    {msg.source && msg.source !== 'user' && (
+                                        <div className="message-meta">
+                                            {msg.source === 'gemini-api' ? '🤖 Gemini' : '💭 Mock'}
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         ))}

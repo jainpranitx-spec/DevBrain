@@ -6,7 +6,7 @@ import { mockAIResponses } from '../utils/mockData';
 
 // Placeholder for API Key - In production use import.meta.env.VITE_GEMINI_API_KEY
 // The user can paste their key here or in .env
-const API_KEY = "";
+const API_KEY = "AIzaSyA1A88qqOw8pIzJdr04ubhe1AF2FrJbuEo";
 
 export const generateAIResponse = async (userMessage, contextNodeName) => {
     // 1. Check if we have a real API key
