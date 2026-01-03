@@ -4,6 +4,12 @@
   --bg-secondary: #0a0a0a;
   --bg-tertiary: #141414;
 
+  /* Background layers */
+  --bg-gradient: radial-gradient(circle at 20% 20%, rgba(191, 90, 242, 0.08), transparent 26%),
+    radial-gradient(circle at 80% 0%, rgba(10, 132, 255, 0.08), transparent 24%),
+    radial-gradient(circle at 50% 80%, rgba(37, 99, 235, 0.08), transparent 30%),
+    var(--bg-primary);
+
   /* Glass Effects - Apple Style */
   --glass-bg: rgba(30, 30, 30, 0.4);
   --glass-bg-hover: rgba(50, 50, 50, 0.5);
@@ -17,21 +23,16 @@
 
   /* Status Colors - Refined */
   --status-not-started: #8e8e93;
-  /* iOS Gray */
   --status-not-started-glow: rgba(142, 142, 147, 0.3);
   --status-in-progress: #ff9f0a;
-  /* iOS Orange */
   --status-in-progress-glow: rgba(255, 159, 10, 0.3);
   --status-completed: #30d158;
-  /* iOS Green */
   --status-completed-glow: rgba(48, 209, 88, 0.3);
 
   /* Accent Colors */
   --accent-primary: #0a84ff;
-  /* iOS Blue */
   --accent-primary-glow: rgba(10, 132, 255, 0.4);
   --accent-secondary: #bf5af2;
-  /* iOS Purple */
   --accent-secondary-glow: rgba(191, 90, 242, 0.4);
 
   /* Blur Levels */
@@ -66,6 +67,43 @@
   --radius-full: 9999px;
 }
 
+:root[data-theme="light"] {
+  --bg-primary: #eef1f6;
+  --bg-secondary: #e6e9f0;
+  --bg-tertiary: #dfe3eb;
+
+  --bg-gradient: radial-gradient(circle at 15% 20%, rgba(168, 85, 247, 0.08), transparent 28%),
+    radial-gradient(circle at 82% 12%, rgba(37, 99, 235, 0.12), transparent 26%),
+    radial-gradient(circle at 50% 85%, rgba(16, 185, 129, 0.12), transparent 32%),
+    var(--bg-primary);
+
+  --glass-bg: rgba(255, 255, 255, 0.6);
+  --glass-bg-hover: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(0, 0, 0, 0.06);
+  --glass-border-hover: rgba(0, 0, 0, 0.12);
+
+  --text-primary: #0f172a;
+  --text-secondary: rgba(15, 23, 42, 0.75);
+  --text-tertiary: rgba(15, 23, 42, 0.5);
+
+  --status-not-started: #6b7280;
+  --status-not-started-glow: rgba(107, 114, 128, 0.2);
+  --status-in-progress: #f59e0b;
+  --status-in-progress-glow: rgba(245, 158, 11, 0.25);
+  --status-completed: #10b981;
+  --status-completed-glow: rgba(16, 185, 129, 0.25);
+
+  --accent-primary: #2563eb;
+  --accent-primary-glow: rgba(37, 99, 235, 0.3);
+  --accent-secondary: #a855f7;
+  --accent-secondary-glow: rgba(168, 85, 247, 0.3);
+
+  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 18px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 8px 26px rgba(0, 0, 0, 0.16);
+  --shadow-glow: 0 0 24px rgba(37, 99, 235, 0.25);
+}
+
 /* ============================================
    GLOBAL RESETS & REST OF FILE...
    ============================================ */
@@ -87,7 +125,9 @@ body,
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: var(--bg-primary);
+  background: radial-gradient(circle at 20% 20%, rgba(191, 90, 242, 0.08), transparent 26%),
+    radial-gradient(circle at 80% 0%, rgba(10, 132, 255, 0.08), transparent 24%),
+    var(--bg-primary);
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -248,10 +288,24 @@ body {
   }
 }
 
-@keyframes pulse {
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  opacity: 0.2;
+  mix-blend-mode: soft-light;
+  z-index: 0;
+}
 
-  0%,
-  100% {
+:root[data-theme="light"] body::before {
+  opacity: 0.14;
+  mix-blend-mode: multiply;
+}
+
+@keyframes pulse {
+  0%, 100% {
     opacity: 1;
   }
 

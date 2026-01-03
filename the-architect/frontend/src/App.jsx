@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import TreeView from './components/TreeView';
 import GraphView from './components/GraphView';
 import ChatPanel from './components/ChatPanel';
+import CommandPalette from './components/CommandPalette';
 import useStore from './store/useStore';
 import './styles/index.css';
 import './App.css';
@@ -13,6 +14,7 @@ function App() {
   return (
     <div className="app">
       <Navbar />
+      <CommandPalette />
 
       <div className={`main-content ${selectedNodeId ? 'chat-open' : ''}`}>
         <AnimatePresence mode="wait">

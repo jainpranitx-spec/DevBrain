@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback, useState } from 'react';
 import ForceGraph2D from 'react-force-graph-2d';
 import useStore from '../store/useStore';
 import { getStatusColor } from '../utils/mockData';
@@ -7,6 +7,27 @@ import '../styles/GraphView.css';
 const GraphView = () => {
     const { nodes, edges, selectNode } = useStore();
     const graphRef = useRef();
+    const [theme, setTheme] = useState('dark');
+
+    const readVar = (name, fallback) => {
+        if (typeof document === 'undefined') return fallback;
+        const val = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+        return val || fallback;
+    };
+
+    const syncTheme = useCallback(() => {
+        const current = typeof document !== 'undefined' && document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+        setTheme(current);
+    }, []);
+
+    useEffect(() => {
+        syncTheme();
+        const handler = (e) => {
+            setTheme(e.detail === 'light' ? 'light' : 'dark');
+        };
+        window.addEventListener('devmind:theme-change', handler);
+        return () => window.removeEventListener('devmind:theme-change', handler);
+    }, [syncTheme]);
 
     // Convert nodes and edges to force-graph format
     const graphData = {
@@ -73,6 +94,13 @@ const GraphView = () => {
         };
     }, []);
 
+    const labelBg = theme === 'light' ? 'rgba(255, 255, 255, 0.85)' : 'rgba(0, 0, 0, 0.75)';
+    const labelText = theme === 'light' ? '#0f172a' : '#ffffff';
+    const labelSub = theme === 'light' ? 'rgba(15, 23, 42, 0.65)' : 'rgba(255, 255, 255, 0.6)';
+    const linkStroke = theme === 'light' ? 'rgba(15, 23, 42, 0.25)' : 'rgba(255, 255, 255, 0.15)';
+    const strokeColor = theme === 'light' ? 'rgba(15, 23, 42, 0.4)' : 'rgba(255, 255, 255, 0.5)';
+    const graphBg = readVar('--bg-primary', theme === 'light' ? '#eef1f6' : '#000000');
+
     return (
         <div className="graph-view">
             <ForceGraph2D
@@ -121,7 +149,7 @@ const GraphView = () => {
                     }
 
                     // Active Border
-                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+                    ctx.strokeStyle = strokeColor;
                     ctx.lineWidth = 1.5 / globalScale;
                     ctx.stroke();
 
@@ -137,7 +165,7 @@ const GraphView = () => {
 
                         // Text Background (for readability over lines)
                         const textWidth = ctx.measureText(label).width;
-                        ctx.fillStyle = 'rgba(0, 0, 0, 0.75)';
+                        ctx.fillStyle = labelBg;
                         // Box padding
                         const p = 2 / globalScale;
 
@@ -153,13 +181,13 @@ const GraphView = () => {
                         ctx.fill();
 
                         // Text
-                        ctx.fillStyle = '#ffffff';
+                        ctx.fillStyle = labelText;
                         ctx.fillText(label, node.x, node.y + nodeRadius + (3 / globalScale) + p);
 
                         // Owner Subtitle (only on deep zoom)
                         if (node.owner && globalScale > 1.8) {
                             ctx.font = `italic ${fontSize * 0.8}px Inter, sans-serif`;
-                            ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+                            ctx.fillStyle = labelSub;
                             ctx.fillText(node.owner, node.x, node.y + nodeRadius + fontSize + (6 / globalScale));
                         }
 
@@ -174,10 +202,9 @@ const GraphView = () => {
                 }}
 
                 // Links
-                linkColor={() => 'rgba(255, 255, 255, 0.15)'}
+                linkColor={() => linkStroke}
                 linkWidth={1}
-
-                backgroundColor="#000000"
+                backgroundColor={graphBg}
                 onNodeClick={handleNodeClick}
             />
         </div>

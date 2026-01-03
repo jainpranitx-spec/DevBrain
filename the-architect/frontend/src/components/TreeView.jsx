@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState, useEffect } from 'react';
 import ReactFlow, {
     Background,
     Controls,
@@ -58,6 +58,7 @@ const TreeView = () => {
             id: node.id,
             type: 'custom',
             data: {
+                id: node.id,
                 label: node.label,
                 status: node.status,
                 owner: node.owner,
@@ -74,13 +75,25 @@ const TreeView = () => {
     const [nodes, setNodes, onNodesChange] = useNodesState(layoutedNodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState(layoutedEdges);
 
+    // Keep ReactFlow state in sync when store updates
+    useEffect(() => {
+        setNodes(layoutedNodes);
+    }, [layoutedNodes, setNodes]);
+
+    useEffect(() => {
+        setEdges(layoutedEdges);
+    }, [layoutedEdges, setEdges]);
+
     const onNodeClick = useCallback((event, node) => {
         selectNode(node.id);
     }, [selectNode]);
 
+    const flowKey = `${layoutedNodes.length}-${layoutedEdges.length}`;
+
     return (
         <div className="tree-view">
             <ReactFlow
+                key={flowKey}
                 nodes={nodes}
                 edges={edges}
                 onNodesChange={onNodesChange}

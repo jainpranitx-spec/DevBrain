@@ -1,0 +1,105 @@
+.cmd-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: grid;
+    place-items: center;
+    z-index: 2000;
+}
+
+.cmd {
+    width: min(720px, 92vw);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    animation: pop var(--transition-smooth);
+}
+
+@keyframes pop {
+    from { transform: translateY(10px) scale(0.98); opacity: 0; }
+    to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.cmd-input-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid var(--glass-border);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.cmd-input-row input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    outline: none;
+}
+
+.kbd {
+    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.cmd-list {
+    max-height: 420px;
+    overflow: auto;
+    display: grid;
+    gap: 0.25rem;
+    padding: 0.75rem;
+}
+
+.cmd-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--text-primary);
+    padding: 0.65rem 0.75rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.cmd-item:hover {
+    border-color: var(--glass-border-hover);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.cmd-item-left {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+.cmd-icon svg {
+    display: block;
+}
+
+.cmd-label {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.cmd-group {
+    font-size: 0.8rem;
+    color: var(--text-tertiary);
+}
+
+.cmd-empty {
+    text-align: center;
+    color: var(--text-secondary);
+    padding: 1rem 0.5rem;
+}

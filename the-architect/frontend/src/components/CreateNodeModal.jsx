@@ -93,10 +93,13 @@ const CreateNodeModal = ({ isOpen, onClose }) => {
                         initial={{ y: '-100vh', opacity: 0 }}
                         animate={{ y: '-50%', opacity: 1 }} // Center vertically
                         exit={{ y: '-100vh', opacity: 0 }}
-                        transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+                        transition={{ type: 'spring', damping: 24, stiffness: 220 }}
                     >
                         <div className="modal-header">
-                            <h2>Create New Node</h2>
+                            <div>
+                                <h2>Create New Node</h2>
+                                <p className="modal-subtitle">Quick add with smart placement and status.</p>
+                            </div>
                             <button className="close-btn glass-button" onClick={onClose}>
                                 <X size={20} />
                             </button>
@@ -118,6 +121,8 @@ const CreateNodeModal = ({ isOpen, onClose }) => {
                                     autoComplete="off"
                                 />
                             </div>
+
+                                        <p className="form-hint">Name it clearly; we will position it near its parent.</p>
 
                             <div className="form-row three-cols">
                                 <div className="form-group">
@@ -166,6 +171,7 @@ const CreateNodeModal = ({ isOpen, onClose }) => {
 
                             <div className="form-group full-width">
                                 <label htmlFor="description">Brief Note</label>
+                                <p className="form-hint">Optional: context or next steps.</p>
                                 <textarea
                                     id="description"
                                     name="description"
