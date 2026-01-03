@@ -71,6 +71,10 @@ class GeminiAIService:
     def __init__(self):
         self.api_key = settings.GEMINI_API_KEY
         self.model_name = settings.GEMINI_MODEL
+
+        # --- ADD THESE LINES FOR DEBUGGING ---
+        print(f"DEBUG: GENAI_AVAILABLE = {GENAI_AVAILABLE}")
+        print(f"DEBUG: API KEY is default? = {self.api_key == 'INSERT API KEY'}")
         
         if GENAI_AVAILABLE and self.api_key != "INSERT API KEY":
             genai.configure(api_key=self.api_key)

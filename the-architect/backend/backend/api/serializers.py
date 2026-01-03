@@ -16,24 +16,48 @@ class ChatMessageSerializer(serializers.ModelSerializer):
 class NodeSerializer(serializers.ModelSerializer):
     position = serializers.SerializerMethodField()
     parentId = serializers.CharField(source='parent.id', read_only=True, allow_null=True)
-    children = serializers.SerializerMethodField()
-    chat_messages = ChatMessageSerializer(many=True, read_only=True, source='chat_messages')
+    parent_id = serializers.CharField(write_only=True, required=False, allow_null=True)
+    chat_messages = ChatMessageSerializer(many=True, read_only=True)
 
     class Meta:
         model = Node
         fields = [
             'id', 'label', 'description', 'status', 'owner',
-            'parentId', 'position', 'created_at', 'updated_at',
-            'children', 'chat_messages'
+            'parentId', 'parent_id', 'position', 'created_at', 'updated_at',
+            'chat_messages'
         ]
         read_only_fields = ['id', 'created_at', 'updated_at']
 
     def get_position(self, obj):
         return {'x': obj.position_x, 'y': obj.position_y}
-
-    def get_children(self, obj):
-        children = obj.get_children()
-        return NodeSerializer(children, many=True).data
+    
+    def create(self, validated_data):
+        parent_id = validated_data.pop('parent_id', None)
+        position = validated_data.pop('position', None)
+        
+        # Handle position if provided as dict
+        if position and isinstance(position, dict):
+            validated_data['position_x'] = position.get('x', 0)
+            validated_data['position_y'] = position.get('y', 0)
+        
+        node = Node.objects.create(**validated_data)
+        
+        # Set parent and create edge if parent_id provided
+        if parent_id:
+            try:
+                parent = Node.objects.get(id=parent_id)
+                node.parent = parent
+                node.save()
+                # Auto-create edge
+                Edge.objects.get_or_create(
+                    project=node.project,
+                    source=parent,
+                    target=node
+                )
+            except Node.DoesNotExist:
+                pass
+        
+        return node
 
 
 class EdgeSerializer(serializers.ModelSerializer):

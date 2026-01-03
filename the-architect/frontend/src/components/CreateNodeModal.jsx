@@ -48,7 +48,8 @@ const CreateNodeModal = ({ isOpen, onClose }) => {
             description: formData.description,
             status: formData.status,
             owner: formData.owner || null,
-            parentId: formData.parentId || null,
+            parent_id: formData.parentId || null,  // Backend expects parent_id
+            parentId: formData.parentId || null,   // Keep for local state
             position: position,
             createdAt: new Date().toISOString(),
         };

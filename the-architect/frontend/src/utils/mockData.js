@@ -99,20 +99,23 @@ export const mockProject = {
 // Generate edges from parent-child relationships
 export const generateEdges = (nodes) => {
   return nodes
-    .filter(node => node.parentId)
-    .map(node => ({
-      id: `e-${node.parentId}-${node.id}`,
-      source: node.parentId,
-      target: node.id,
-      type: 'smoothstep',
-      animated: node.status === 'in-progress',
-      style: {
-        stroke: getStatusColor(node.status),
-        strokeWidth: 2,
-      },
-      // Particle color for graph view
-      color: getStatusColor(node.status),
-    }));
+    .filter(node => node.parentId || node.parent_id)
+    .map(node => {
+      const parentId = node.parentId || node.parent_id;
+      return {
+        id: `e-${parentId}-${node.id}`,
+        source: parentId,
+        target: node.id,
+        type: 'smoothstep',
+        animated: node.status === 'in-progress',
+        style: {
+          stroke: getStatusColor(node.status),
+          strokeWidth: 2,
+        },
+        // Particle color for graph view
+        color: getStatusColor(node.status),
+      };
+    });
 };
 
 // Helper to get status color
