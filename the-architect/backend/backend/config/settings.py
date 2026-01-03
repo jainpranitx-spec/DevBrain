@@ -25,21 +25,28 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOW_CREDENTIALS = True
 
 INSTALLED_APPS = [
-    'daphne',  # WebSocket support
-    'django.contrib.contenttypes',
+    'daphne',
+    'django.contrib.admin',       # <-- Added
     'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',    # <-- Added (Required for Admin)
+    'django.contrib.messages',    # <-- Added (Required for Admin)
+    'django.contrib.staticfiles', # <-- Added (Required for Admin styling)
     'rest_framework',
     'corsheaders',
-    'api',
-]
+    'api'
+] 
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',  # <-- Added
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware', # <-- Added
+    'django.contrib.messages.middleware.MessageMiddleware',    # <-- Added
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
+] 
 
 ROOT_URLCONF = 'config.urls'
 
@@ -52,6 +59,8 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',        # <-- Added
+                'django.contrib.messages.context_processors.messages', # <-- Added
             ],
         },
     },
@@ -97,7 +106,7 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760  # 10MB
 FILE_UPLOAD_MAX_MEMORY_SIZE = 10485760  # 10MB
 
 # Gemini API
-GEMINI_API_KEY = 'INSERT API KEY'  # Replace with actual key
+GEMINI_API_KEY = ''  # Replace with actual key
 GEMINI_MODEL = 'gemini-1.5-flash'
 
 # Knowledge base settings
