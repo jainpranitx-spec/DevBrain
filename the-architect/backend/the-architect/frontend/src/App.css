@@ -1,0 +1,34 @@
+.app {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--bg-primary);
+  /* Ensure background is solid black */
+}
+
+.main-content {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  transition: margin-right 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+  /* iOS-like spring easing */
+  padding-top: 100px;
+  /* Space for the floating navbar */
+  will-change: margin-right;
+}
+
+.main-content.chat-open {
+  margin-right: 400px;
+  /* Match chat panel width */
+}
+
+.view-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: all var(--transition-smooth);
+}
