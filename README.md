@@ -61,6 +61,44 @@ Think of it as **Obsidian meets Notion meets ChatGPT** - all in one beautiful, g
 
 ---
 
+## 🎬 Demo
+
+### 🖼️ Screenshots
+
+<div align="center">
+
+#### Tree View (Dark Mode)
+![Tree View Dark](screenshots/tree-view-dark.png)
+*Hierarchical project structure with parent-child relationships clearly visualized*
+
+#### Graph View (Dark Mode)
+![Graph View Dark](screenshots/graph-view-dark.png)
+*Interactive force-directed graph showing node connections*
+
+#### Graph View (Light Mode)
+![Graph View Light](screenshots/graph-view-light.png)
+*Clean light theme for daytime productivity*
+
+#### Tree View (Light Mode)
+![Tree View Light](screenshots/tree-view-light.png)
+*Structured view with intelligent auto-layout*
+
+#### AI Chat Panel
+![AI Chat Panel](screenshots/ai-chat-panel.png)
+*Context-aware AI assistance for each node with task breakdown and smart suggestions*
+
+#### Create Node Modal
+![Create Node Modal](screenshots/create-node-modal.png)
+*Quick node creation with smart placement and status tracking*
+
+#### Keyboard Shortcuts
+![Keyboard Shortcuts](screenshots/keyboard-shortcuts.png)
+*Power user features for efficient navigation and workflow*
+
+</div>
+
+---
+
 ## 💎 Key Benefits
 
 | Benefit | Description |
