@@ -665,7 +665,7 @@ file: [binary file data]
 │   ├── Database Schema
 │   ├── REST API
 │   └── Authentication
-├── 📱 Mobile App
+├── 📱 Mobile App (upcoming)
 │   ├── Login Screen
 │   ├── Home Feed
 │   └── Profile Page
@@ -701,21 +701,6 @@ file: [binary file data]
 
 ---
 
-### 4. **Personal Learning Path**
-
-```
-🎓 Learn Full-Stack Development
-├── 🟢 HTML/CSS Fundamentals (Completed)
-├── 🟡 JavaScript Basics (In Progress)
-│   ├── Variables & Data Types
-│   ├── Functions & Scope
-│   └── Async Programming
-├── 🔴 React Framework (Not Started)
-├── 🔴 Backend with Node.js
-└── 🔴 Database Design
-```
-
----
 
 ## 🌟 Why Choose DevBrain?
 
@@ -751,6 +736,7 @@ file: [binary file data]
 - [ ] Gantt chart view
 - [ ] Time tracking per node
 - [ ] AI-generated diagrams from nodes
+- [ ] Support PDF, research papers and different types of files
 
 ---
 
