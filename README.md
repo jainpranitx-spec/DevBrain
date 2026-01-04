@@ -142,8 +142,8 @@ AI: "Key risks for this node:
 ### 📁 **Knowledge Base System**
 
 Upload your research, documentation, and notes:
-- 📄 **PDF** - Research papers, design docs
-- 📝 **DOCX** - Word documents, specifications
+- 📄 **PDF** - Research papers, design docs(upcoming)
+- 📝 **DOCX** - Word documents, specifications(upcoming)
 - 📋 **TXT/MD** - Plain text notes, markdown files
 
 The AI automatically searches and references uploaded knowledge when answering questions.
@@ -882,7 +882,7 @@ keyboard-first workflow
 
 <div align="center">
 
-**Built with ❤️ for developers, by developers**
+**Thanks to my team members time and effort. I appreciate you all gyes.🖤**
 
 **Star ⭐ this repo if you find it helpful!**
 
