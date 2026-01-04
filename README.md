@@ -832,9 +832,8 @@ SOFTWARE.
 
 ## 📞 Support & Contact
 
-- **Issues:** [GitHub Issues](https://github.com/yourusername/devbrain-the-architect/issues)
-- **Discussions:** [GitHub Discussions](https://github.com/yourusername/devbrain-the-architect/discussions)
-- **Email:** support@devbrain.dev (placeholder)
+- **Email:** md.shamsuddoha109@gmail.com (placeholder)
+- **Discord** shams063
 
 ---
 
