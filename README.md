@@ -833,7 +833,7 @@ SOFTWARE.
 ## 📞 Support & Contact
 
 - **Email:** md.shamsuddoha109@gmail.com (placeholder)
-- **Discord** shams063
+- **Discord:** shams063
 
 ---
 
