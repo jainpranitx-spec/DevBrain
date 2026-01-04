@@ -905,7 +905,7 @@ keyboard-first workflow
 
 <div align="center">
 
-**Thanks to my team members time and effort. I appreciate you all gyes.🖤**
+**Thanks to my team members time and effort. I appreciate you all guys.🖤**
 
 **Star ⭐ this repo if you find it helpful!**
 
